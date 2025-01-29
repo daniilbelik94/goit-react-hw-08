@@ -1,0 +1,12 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 0 15px;
+}
+.btn {
+  padding: 5px;
+  display: block;
+  border-radius: 5px;
+  border: 1px solid #808080;
+}

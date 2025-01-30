@@ -67,7 +67,7 @@ const contactsSlice = createSlice({
 });
 
 
-const selectFilteredContacts = createSelector(
+export const selectFilteredContacts = createSelector(
   [selectContacts, selectFilter],
   (contacts, filter) => {
     return Array.isArray(contacts)

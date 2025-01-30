@@ -3,7 +3,7 @@ import {
   apiGetCurrentUser,
   apiLoginUser,
   apiLogOutUser,
-  apiRgisterUser,
+  apiRegisterUser, 
 } from './operations';
 
 const INITIAL_STATE = {
@@ -20,17 +20,17 @@ const authSlice = createSlice({
   initialState: INITIAL_STATE,
   extraReducers: (builder) =>
     builder
-      .addCase(apiRgisterUser.pending, (state) => {
+      .addCase(apiRegisterUser.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(apiRgisterUser.fulfilled, (state, actions) => {
+      .addCase(apiRegisterUser.fulfilled, (state, actions) => {
         state.isLoading = false;
         state.isLoggedIn = true;
         state.token = actions.payload.token;
         state.userData = actions.payload.user;
       })
-      .addCase(apiRgisterUser.rejected, (state, actions) => {
+      .addCase(apiRegisterUser.rejected, (state, actions) => {
         state.isLoading = false;
         state.error = actions.payload;
       })
@@ -67,8 +67,13 @@ const authSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(apiLogOutUser.fulfilled, () => {
-        return INITIAL_STATE;
+      .addCase(apiLogOutUser.fulfilled, (state) => {
+        state.userData = null;
+        state.token = null;
+        state.isLoggedIn = false;
+        state.isRefreshing = false;
+        state.isLoading = false;
+        state.error = null;
       })
       .addCase(apiLogOutUser.rejected, (state, actions) => {
         state.isLoading = false;

@@ -13,7 +13,7 @@ export const clearToken = () => {
   authInstans.defaults.headers.common.Authorization = '';
 };
 
-export const apiRgisterUser = createAsyncThunk(
+export const apiRegisterUser = createAsyncThunk(
   'auth/registeUser',
   async (formData, thunkApi) => {
     try {

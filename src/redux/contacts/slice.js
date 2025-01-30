@@ -1,5 +1,4 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
-
 import { selectContacts } from './selectors';
 import { selectFilter } from '../filters/selectors';
 import {
@@ -7,9 +6,10 @@ import {
   apiDeleteContacts,
   apiGetContacts,
 } from './operations';
+import { apiLogOutUser } from '../auth/operations';
 
 const INITIAL_STATE = {
-  contacts: null,
+  contacts: [], 
   isLoading: false,
   error: null,
 };
@@ -54,25 +54,29 @@ const contactsSlice = createSlice({
           (contact) => contact.id !== action.payload.id
         );
         state.isLoading = false;
-        state.error = false;
+        state.error = null; // Исправлено с false на null
       })
       .addCase(apiDeleteContacts.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      })
+      //
+      .addCase(apiLogOutUser.fulfilled, (state) => {
+        state.contacts = []; 
       }),
 });
 
-export const selectFilteredContacts = createSelector(
+
+const selectFilteredContacts = createSelector(
   [selectContacts, selectFilter],
   (contacts, filter) => {
-    const data = Array.isArray(contacts)
+    return Array.isArray(contacts)
       ? contacts.filter(
           (contact) =>
             contact.name.toLowerCase().includes(filter.toLowerCase()) ||
             contact.number.includes(filter)
         )
       : [];
-    return data;
   }
 );
 

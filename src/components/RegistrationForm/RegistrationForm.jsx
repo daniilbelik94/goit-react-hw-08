@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 
 import Section from '../Section/Section';
 
-import { apiRgisterUser } from '../../redux/auth/operations';
+import { apiRegisterUser } from '../../redux/auth/operations';
 
 import css from './RegistrationForm.module.css';
 
@@ -34,7 +34,7 @@ const RegistrationForm = () => {
   });
 
   const handleSubmit = (values, actions) => {
-    dispatch(apiRgisterUser(values));
+    dispatch(apiRegisterUser(values));
     actions.resetForm();
   };
 
